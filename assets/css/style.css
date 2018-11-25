@@ -1,0 +1,17 @@
+#background {
+    background-image: url(background.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+}
+
+#logo {
+    background: #006699;
+    color: whitesmoke;
+    width: auto;
+    font-family: 'Limelight', cursive;
+    font-size:65px;
+    text-shadow: 5px 5px 10px #111111;
+    box-shadow: 5px 5px 10px #111111;
+    border: ridge;
+}
