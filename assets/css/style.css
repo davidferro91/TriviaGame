@@ -16,6 +16,10 @@
     border: ridge;
 }
 
+#startButton {
+    font-family: 'Limelight', cursive;
+}
+
 #question {
     background: #006699;
     color: whitesmoke;
@@ -24,4 +28,11 @@
     text-shadow: 3px 3px 10px #111111;
     box-shadow: 5px 5px 10px #111111;
     border: ridge; 
+}
+
+#correct:hover, #incorrect:hover {
+    background: whitesmoke;
+    opacity: 0.75;
+    cursor: pointer;
+    color: #111111;
 }

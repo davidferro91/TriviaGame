@@ -16,7 +16,7 @@ var questionCounter = 0;
 var optRand = -1;
 var questionArr = [];
 var question1 = {
-    question: "In what year did the Disney cartoon \" Steamboat Willie\" premiere?",
+    question: "In what year did the Disney cartoon \"Steamboat Willie\" premiere?",
     correct: "1928",
     incorrect: ["1926", "1930", "1942"]
 }
@@ -25,9 +25,57 @@ var question2 = {
     correct: "ALF",
     incorrect: ["Cliff Clavin", "Rose Nylund", "Alex Keaton"]
 }
+var question3 = {
+    question: "",
+    correct: "",
+    incorrect: ["", "", ""]
+}
+var question4 = {
+    question: "",
+    correct: "",
+    incorrect: ["", "", ""]
+}
+var question5 = {
+    question: "",
+    correct: "",
+    incorrect: ["", "", ""]
+}
+var question6 = {
+    question: "",
+    correct: "",
+    incorrect: ["", "", ""]
+}
+var question7 = {
+    question: "",
+    correct: "",
+    incorrect: ["", "", ""]
+}
+var question8 = {
+    question: "",
+    correct: "",
+    incorrect: ["", "", ""]
+}
+var question9 = {
+    question: "",
+    correct: "",
+    incorrect: ["", "", ""]
+}
+var question10 = {
+    question: "",
+    correct: "",
+    incorrect: ["", "", ""]
+}
 
 questionArr[0] = question1;
 questionArr[1] = question2;
+questionArr[2] = question3;
+questionArr[3] = question4;
+questionArr[4] = question5;
+questionArr[5] = question6;
+questionArr[6] = question7;
+questionArr[7] = question8;
+questionArr[8] = question9;
+questionArr[9] = question10;
 console.log(questionArr);
 
 function newQuestion (index) {
