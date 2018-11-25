@@ -2,7 +2,7 @@
     background-image: url(background.jpg);
     background-size: cover;
     background-repeat: no-repeat;
-    height: 100vh;
+    height: 150vh;
 }
 
 #logo {
@@ -14,4 +14,14 @@
     text-shadow: 5px 5px 10px #111111;
     box-shadow: 5px 5px 10px #111111;
     border: ridge;
+}
+
+#question {
+    background: #006699;
+    color: whitesmoke;
+    width: auto;
+    font-size:40px;
+    text-shadow: 3px 3px 10px #111111;
+    box-shadow: 5px 5px 10px #111111;
+    border: ridge; 
 }
