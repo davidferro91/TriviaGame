@@ -1,17 +1,6 @@
-function newGame () {
-    var questionBox = $("<div>");
-    questionBox.addClass("col rounded text-center p-3 m-5");
-    questionBox.attr("id", "question");
-    var startBtn = $("<button>");
-    startBtn.addClass("rounded p-2 m-2");
-    startBtn.attr("id", "startButton");
-    startBtn.append("Start");
-    questionBox.append(startBtn);
-    $("#questionHolder").append(questionBox);
-}
-
-newGame();
-
+var correctAns = 0;
+var incorrAns = 0;
+var timeOut = 0;
 var questionCounter = 0;
 var optRand = -1;
 var questionArr = [];
@@ -76,34 +65,157 @@ questionArr[6] = question7;
 questionArr[7] = question8;
 questionArr[8] = question9;
 questionArr[9] = question10;
-console.log(questionArr);
 
-function newQuestion (index) {
-    var questionBox = $("<div>");
-    questionBox.addClass("col rounded text-center p-3 m-5");
-    questionBox.attr("id", "question");
-    questionBox.append(questionArr[index].question);
-    var options = [];
-    for (var i = 0; i < 4; i++) {
-        options[i] = $("<div>");
-        options[i].addClass("row rounded justify-content-center p-3");
-    }
-    optRand = Math.floor(Math.random() * 4);
-    options[optRand].attr("id", "correct");
-    options[optRand].append(questionArr[index].correct);
-    for (var i = 0; i < 3; i++) {
-        options[(optRand + 1 + i)%4].attr("id", "incorrect");
-        options[(optRand + 1 + i)%4].append(questionArr[index].incorrect[i]);
-    }
-    for (var i = 0; i < 4; i++) {
-        questionBox.append(options[i]);
-    }
-    $("#questionHolder").append(questionBox);
+var thirtyCountdown = 31;
+var intervalId;
+
+function run() {
+    clearInterval(intervalId);
+    intervalId = setInterval(decrement, 1000);
 }
 
-$("#startButton").on("click", function() {
+function decrement() {
+    thirtyCountdown--;
+    $("#timerHolder").html("Time Remaining: " + thirtyCountdown);
+    if (thirtyCountdown < 1) {
+        stop();
+        timeOut++;
+        scoreKeeper();
+        timeoutMessage(questionCounter);
+    }
+}
+
+function stop() {
+    clearInterval(intervalId);
+    thirtyCountdown = 31;
+}
+
+function newGame () {
+    var questionBox = $("<div>");
+    questionBox.addClass("col rounded text-center p-2 m-2");
+    questionBox.attr("id", "question");
+    var startBtn = $("<button>");
+    startBtn.addClass("rounded p-2 m-2");
+    startBtn.attr("id", "startButton");
+    startBtn.append("Start");
+    questionBox.append(startBtn);
+    $("#questionHolder").append(questionBox);
+    correctAns = 0;
+    incorrAns = 0;
+    timeOut = 0;
+    questionCounter = 0;
+    optRand = -1;
+    thirtyCountdown = 31;
+    scoreKeeper();
+}
+
+function scoreKeeper () {
+    $("#scoreBox").empty();
+    var scoreBoard = $("<div>");
+    scoreBoard.addClass("rounded p-2 m-1");
+    scoreBoard.append("<p>Correct: " + correctAns + "</p>");
+    scoreBoard.append("<p>Incorrect: " + incorrAns + "</p>");
+    scoreBoard.append("<p>Timed Out: " + timeOut + "</p>");
+    $("#scoreBox").append(scoreBoard);
+}
+
+function newQuestion (index) {
+    if (index < 10) {
+        var questionBox = $("<div>");
+        questionBox.addClass("col rounded text-center p-2 m-2");
+        questionBox.attr("id", "question");
+        questionBox.append(questionArr[index].question);
+        questionBox.append("<hr>")
+        var options = [];
+        for (var i = 0; i < 4; i++) {
+            options[i] = $("<div>");
+            options[i].addClass("row rounded justify-content-center p-2 m-2");
+        }
+        optRand = Math.floor(Math.random() * 4);
+        options[optRand].attr("id", "correct");
+        options[optRand].append(questionArr[index].correct);
+        for (var i = 0; i < 3; i++) {
+            options[(optRand + 1 + i)%4].attr("id", "incorrect");
+            options[(optRand + 1 + i)%4].append(questionArr[index].incorrect[i]);
+        }
+        for (var i = 0; i < 4; i++) {
+            questionBox.append(options[i]);
+        }
+        $("#questionHolder").append(questionBox);
+        run();
+    } else {
+        var finalScreen = $("<div>");
+        finalScreen.addClass("col rounded text-center p-2 m-2");
+        finalScreen.attr("id", "question");
+        finalScreen.append("<p>You've finished!  Here's how you did.</p><p>Number of questions you had correct: " + correctAns + "</p><p>Number of questions you had incorrect: " + incorrAns + "</p><p>Number of questions where you ran out of time: " + timeOut + "</p>");
+        var restartBtn = $("<button>");
+        restartBtn.addClass("rounded p-2 m-2");
+        restartBtn.attr("id", "restartButton");
+        restartBtn.append("Restart");
+        finalScreen.append(restartBtn);
+        $("#questionHolder").append(finalScreen);
+    }
+}
+
+function correctMessage (index) {
+    $("#questionHolder").empty();
+    var correctBox = $("<div>");
+    correctBox.addClass("col rounded text-center p-2 m-2");
+    correctBox.attr("id", "question");
+    correctBox.append("Congratulations!  You selected the correct answer: " + questionArr[index-1].correct);
+    $("#questionHolder").append(correctBox);
+    setTimeout(newQuestionGenerator, 3000);
+}
+
+function incorrectMessage (index) {
+    $("#questionHolder").empty();
+    var incorrectBox = $("<div>");
+    incorrectBox.addClass("col rounded text-center p-2 m-2");
+    incorrectBox.attr("id", "question");
+    incorrectBox.append("I'm sorry.  You selected an incorrect answer.  The correct answer was: " + questionArr[index-1].correct);
+    $("#questionHolder").append(incorrectBox);
+    setTimeout(newQuestionGenerator, 4000);
+}
+
+function timeoutMessage (index) {
+    $("#questionHolder").empty();
+    var timeoutBox = $("<div>");
+    timeoutBox.addClass("col rounded text-center p-2 m-2");
+    timeoutBox.attr("id", "question");
+    timeoutBox.append("I'm sorry.  You ran out of time.  The correct answer was: " + questionArr[index-1].correct);
+    $("#questionHolder").append(timeoutBox);
+    setTimeout(newQuestionGenerator, 4000);
+}
+
+function newQuestionGenerator () {
+    $("#questionHolder").empty();
+    newQuestion(questionCounter);
+    questionCounter++;
+}
+
+newGame();
+
+$("#questionHolder").on("click", "#startButton", function() {
     $("#questionHolder").empty();
     newQuestion(questionCounter);
     questionCounter++;
 });
 
+$("#questionHolder").on("click", "#correct", function() {
+    stop();
+    correctAns++;
+    scoreKeeper();
+    correctMessage(questionCounter);
+});
+
+$("#questionHolder").on("click", "#incorrect", function() {
+    stop();
+    incorrAns++;
+    scoreKeeper();
+    incorrectMessage(questionCounter);
+});
+
+$("#questionHolder").on("click", "#restartButton", function() {
+    $("#questionHolder").empty();
+    newGame();
+});

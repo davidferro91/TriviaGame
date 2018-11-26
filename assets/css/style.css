@@ -16,18 +16,34 @@
     border: ridge;
 }
 
-#startButton {
+#startButton, #restartButton {
     font-family: 'Limelight', cursive;
 }
 
-#question {
+#question, #scoreBox, #timerHolder {
     background: #006699;
     color: whitesmoke;
     width: auto;
-    font-size:40px;
     text-shadow: 3px 3px 10px #111111;
     box-shadow: 5px 5px 10px #111111;
     border: ridge; 
+}
+
+hr {
+    border:ridge;
+    color: whitesmoke;
+}
+
+#timerHolder {
+    font-size:25px;
+}
+
+#scoreBox {
+    font-size:20px;
+}
+
+#question {
+    font-size:30px;
 }
 
 #correct:hover, #incorrect:hover {
